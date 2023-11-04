@@ -27,8 +27,9 @@ def constraint_nodes(source_list, destination_list):
         parent_constraint_node = pm.parentConstraint(destination, output, mo=False)
         parent_constraints_list.append(parent_constraint_node)
         weight_alias = parent_constraint_node.getWeightAliasList()
-
+        # connecting the control to the first weight
         control.ikControl >> weight_alias[0]
+        # connecting the reverse to the second weight
         reverse_node.outputX >> weight_alias[1]
 
 

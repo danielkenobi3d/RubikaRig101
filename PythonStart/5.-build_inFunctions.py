@@ -1,0 +1,13 @@
+type()
+print()
+len()
+dir()
+str()
+int()
+float()
+bool()
+names = ['daniel','juan','randi','pedro']
+print(list(reversed(names)))
+print(names)
+names.reverse()
+print(names)

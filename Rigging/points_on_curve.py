@@ -30,11 +30,24 @@ def creates_joints_on_curve(curve, number_of_joints):
                 endEffector = list_joints[-1],
                 solver='ikSplineSolver',
                 createCurve=False, curve=curve)
+    return list_joints
 
-# selection = pm.ls(selection=True)
-# curve = create_curve_based_on_locators(selection)
-# creates_joints_on_curve(curve, 20)
-# create_equidistant_jnt(5)
+def make_stretchy_spline_ik(curve, list_of_joints):
+    curve_info_node = pm.createNode('curveInfo')
+    divide_node = pm.createNode('multiplyDivide')
+    curve.worldSpace[0] >> curve_info_node.inputCurve
+    curve_info_node.arcLength >> divide_node.input1X
+    divide_node.input2X.set(len(list_of_joints)-1)
+    divide_node.operation.set(2)
+    for each_joint in list_of_joints[1:]:
+        divide_node.outputX >> each_joint.translateX
+
+
+
 selection = pm.ls(selection=True)
-create_curve_based_on_locators(selection)
+curve = create_curve_based_on_locators(selection)
+new_joints = creates_joints_on_curve(curve, 20)
+make_stretchy_spline_ik(curve, new_joints)
+
+
 

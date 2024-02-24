@@ -26,8 +26,8 @@ def create_curve_based_on_locators(locators_list):
 
 def creates_joints_on_curve(curve, number_of_joints):
     list_joints = create_equidistant_jnt(number_of_joints)
-    pm.ikHandle(startJoint = list_joints[0],
-                endEffector = list_joints[-1],
+    pm.ikHandle(startJoint=list_joints[0],
+                endEffector=list_joints[-1],
                 solver='ikSplineSolver',
                 createCurve=False, curve=curve)
     return list_joints
@@ -43,11 +43,11 @@ def make_stretchy_spline_ik(curve, list_of_joints):
         divide_node.outputX >> each_joint.translateX
 
 
-
-selection = pm.ls(selection=True)
-curve = create_curve_based_on_locators(selection)
-new_joints = creates_joints_on_curve(curve, 20)
-make_stretchy_spline_ik(curve, new_joints)
+if __name__ == '__main__':
+    selection = pm.ls(selection=True)
+    curve = create_curve_based_on_locators(selection)
+    new_joints = creates_joints_on_curve(curve, 20)
+    make_stretchy_spline_ik(curve, new_joints)
 
 
 
